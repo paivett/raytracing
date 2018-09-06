@@ -1,5 +1,5 @@
-#ifndef Vec3_H
-#define Vec3_H
+#ifndef _VEC3_H_
+#define _VEC3_H_
 
 #include <ostream>
 
@@ -59,4 +59,4 @@ Vec3 operator*(float lambda, const Vec3 v);
 // Output to an ostream
 std::ostream& operator<<(std::ostream& o, Vec3 v);
 
-#endif // Vec3_H
+#endif // _VEC3_H_

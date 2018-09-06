@@ -5,18 +5,18 @@
 
 class Ray {
     public:
-        Ray() {};
+        Ray();
 
-        Ray(const Vec3& origin, const Vec3& direction) : o(origin), dir(direction) {};
+        Ray(const Vec3& origin, const Vec3& direction);
 
-        Vec3 direction() const { return dir; };
+        Vec3 direction() const;
 
-        Vec3 origin() const { return o; };
+        Vec3 origin() const;
 
-        Vec3 point_at_parameter(float t) { return o + t * dir; };
+        Vec3 point_at_parameter(float t);
 
     private:
         Vec3 o, dir;
 };
 
-#endif
+#endif // _RAY_H_
