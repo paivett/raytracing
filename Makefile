@@ -5,7 +5,7 @@
 #                                                                     #
 #######################################################################
 
-TARGET_BIN ?= a.out
+TARGET_BIN ?= raytracer
 
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
