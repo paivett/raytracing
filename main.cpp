@@ -1,4 +1,5 @@
 #include <iostream>
+#include "ray.h"
 
 #define CHANNEL_TO_INT(c)   (int(255.99 * c))
 
