@@ -2,94 +2,94 @@
 #include <cmath>
 #include <algorithm>
 
-vec3::vec3() : x(.0), y(.0), z(.0) {
+Vec3::Vec3() : x(.0), y(.0), z(.0) {
 }
 
-vec3::vec3(float x, float y, float z) : x(x), y(y), z(z) {
+Vec3::Vec3(float x, float y, float z) : x(x), y(y), z(z) {
 }
 
-float vec3::sqr_norm() const {
+float Vec3::sqr_norm() const {
     return x*x + y*y + z*z;
 }
 
-float vec3::norm() const {
+float Vec3::norm() const {
     return sqrt(x*x + y*y + z*z);
 }
 
-vec3 vec3::operator-(const vec3& v) const {
-    return vec3(x-v.x, y-v.y, z-v.z);
+Vec3 Vec3::operator-(const Vec3& v) const {
+    return Vec3(x-v.x, y-v.y, z-v.z);
 }
 
-vec3& vec3::operator-=(const vec3& v) {
+Vec3& Vec3::operator-=(const Vec3& v) {
     x -= v.x;
     y -= v.y;
     z -= v.z;
     return *this;
 }
 
-vec3 vec3::operator+(const vec3& v) const {
-    return vec3(x+v.x, y+v.y, z+v.z);
+Vec3 Vec3::operator+(const Vec3& v) const {
+    return Vec3(x+v.x, y+v.y, z+v.z);
 }
 
-vec3& vec3::operator+=(const vec3& v) {
+Vec3& Vec3::operator+=(const Vec3& v) {
     x += v.x;
     y += v.y;
     z += v.z;
     return *this;
 }
 
-vec3 vec3::operator-() const {
-    return vec3(-x, -y, -z);
+Vec3 Vec3::operator-() const {
+    return Vec3(-x, -y, -z);
 }
 
-vec3 vec3::operator*(float lambda) const {
-    return vec3(x*lambda, y*lambda, z*lambda);
+Vec3 Vec3::operator*(float lambda) const {
+    return Vec3(x*lambda, y*lambda, z*lambda);
 }
 
-vec3& vec3::operator*=(float lambda) {
+Vec3& Vec3::operator*=(float lambda) {
     x *= lambda;
     y *= lambda;
     z *= lambda;
     return *this;
 }
 
-vec3 operator*(float lambda, const vec3 v) {
+Vec3 operator*(float lambda, const Vec3 v) {
     return v * lambda;
 }
 
-float vec3::operator*(const vec3& v) const {
+float Vec3::operator*(const Vec3& v) const {
     return (x*v.x) + (y*v.y) + (z*v.z) ;
 }
 
-vec3 vec3::abs() const {
-    return vec3(std::abs(x), std::abs(y), std::abs(z));
+Vec3 Vec3::abs() const {
+    return Vec3(std::abs(x), std::abs(y), std::abs(z));
 }
 
-float vec3::max() const {
+float Vec3::max() const {
     return std::max(x, std::max(y, z));
 }
 
-float vec3::min() const {
+float Vec3::min() const {
     return std::min(x, std::min(y, z));
 }
 
-vec3 vec3::operator/(float lambda) const {
-    return vec3(x/lambda, y/lambda, z/lambda);
+Vec3 Vec3::operator/(float lambda) const {
+    return Vec3(x/lambda, y/lambda, z/lambda);
 }
 
-vec3& vec3::operator/=(float lambda) {
+Vec3& Vec3::operator/=(float lambda) {
     x /= lambda;
     y /= lambda;
     z /= lambda;
     return *this;
 }
 
-vec3 vec3::normalized() const {
+Vec3 Vec3::normalized() const {
     return (*this)/norm();
 }
 
 // Output to an ostream
-std::ostream& operator<<(std::ostream& o, vec3 v) {
+std::ostream& operator<<(std::ostream& o, Vec3 v) {
     o << v.x << ", " << v.y << ", " << v.z;
     return o;
 }
