@@ -19,6 +19,6 @@ Vec3 Ray::origin() const {
 }
 
 
-Vec3 Ray::point_at_parameter(float t) { 
+Vec3 Ray::point_at_parameter(float t) const { 
     return o + t * dir;
 }

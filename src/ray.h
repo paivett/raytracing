@@ -13,7 +13,7 @@ class Ray {
 
         Vec3 origin() const;
 
-        Vec3 point_at_parameter(float t);
+        Vec3 point_at_parameter(float t) const;
 
     private:
         Vec3 o, dir;
