@@ -4,11 +4,11 @@ HitableList::HitableList() {
 
 }
 
-HitableList::HitableList(const std::list<Hitable*>& hitables) : hitables(hitables) {
+HitableList::HitableList(const std::list<std::shared_ptr<Hitable> >& hitables) : hitables(hitables) {
 
 }
 
-void HitableList::add(Hitable* hitable) {
+void HitableList::add(const std::shared_ptr<Hitable>& hitable) {
     hitables.push_back(hitable);
 }
 

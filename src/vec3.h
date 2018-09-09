@@ -49,6 +49,10 @@ struct Vec3 {
     // Returns a new vector normalized
     Vec3 normalized() const;
 
+    // Returns a new vector reflected by the plane defined
+    // by a given normal (should be a normal)
+    Vec3 reflected(const Vec3& normal) const;
+
     // Actual components of the Vec3
     float x, y, z;
 };

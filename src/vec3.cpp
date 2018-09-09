@@ -88,6 +88,10 @@ Vec3 Vec3::normalized() const {
     return (*this)/norm();
 }
 
+Vec3 Vec3::reflected(const Vec3& normal) const {
+    return (*this)- 2.0 * ((*this) * normal) * normal;
+}
+
 // Output to an ostream
 std::ostream& operator<<(std::ostream& o, Vec3 v) {
     o << v.x << ", " << v.y << ", " << v.z;

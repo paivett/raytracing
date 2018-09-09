@@ -1,35 +1,29 @@
 #include <iostream>
 #include <cmath>
-#include <random>
+#include "random.h"
 #include "camera.h"
 #include "sphere.h"
 #include "hitable_list.h"
+#include "metal.h"
+#include "lambertian.h"
 
 #define CHANNEL_TO_INT(c)   (int(255.99 * c))
 
 using namespace std;
 
-double random_number() {
-    static default_random_engine generator;
-    static uniform_real_distribution<double> distribution(0.0, 1.0);
-    return distribution(generator);
-}
-
-Vec3 random_in_unit_sphere() {
-    Vec3 p;
-    do {
-        p = 2.0 * Vec3(random_number(), random_number(), random_number()) - Vec3(1.0, 1.0, 1.0);
-    } while(p.sqr_norm() >= 1.0);
-    
-    return p;
-}
-
-Vec3 compute_color(const Ray& ray, const HitableList& world) {
+Vec3 compute_color(const Ray& ray, const HitableList& world, int recursion_depth) {
     HitRecord rec;
     
     if (world.hit(ray, 0.001, MAXFLOAT, rec)) {
-        Vec3 target = rec.p + rec.normal + random_in_unit_sphere();
-        return 0.5 * compute_color(Ray(rec.p, target-rec.p), world);
+        Ray scattered;
+        Vec3 attenuation;
+        if (recursion_depth < 50 && rec.material->scatter(ray, rec, attenuation, scattered)) {
+            Vec3 color = compute_color(scattered, world, recursion_depth + 1);
+            return Vec3(attenuation.x * color.x, attenuation.y * color.y, attenuation.z * color.z);
+        }
+        else {
+            return Vec3(0.0, 0.0, 0.0);
+        }
     }
 
     Vec3 unit_direction = ray.direction().normalized();
@@ -44,11 +38,16 @@ int main() {
 
     cout << "P3" << endl << nx << " " << ny << endl << "255" << endl;
 
-    Sphere s1(Vec3(0.0, 0.0, -1.0), 0.5);
-    Sphere s2(Vec3(0.0, -100.5, -1.0), 100.0);
+    shared_ptr<Sphere> s1 = make_shared<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5, make_shared<Lambertian>(Vec3(0.8, 0.3, 0.3)));
+    shared_ptr<Sphere> s2 = make_shared<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0, make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0)));
+    shared_ptr<Sphere> s3 = make_shared<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.6, 0.2)));
+    shared_ptr<Sphere> s4 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.8, 0.8)));
+
     HitableList world;
-    world.add(&s1);
-    world.add(&s2);
+    world.add(s1);
+    world.add(s2);
+    world.add(s3);
+    world.add(s4);
 
     Camera cam;
 
@@ -62,7 +61,7 @@ int main() {
 
                 Ray ray = cam.get_ray(u, v);
 
-                color += compute_color(ray, world);
+                color += compute_color(ray, world, 0);
             }
             
             color /= float(ns);

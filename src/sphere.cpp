@@ -5,7 +5,7 @@ Sphere::Sphere() {
 
 }
 
-Sphere::Sphere(const Vec3& center, float radius) : center(center), radius(radius) {
+Sphere::Sphere(const Vec3& center, float radius, std::shared_ptr<Material> material) : center(center), radius(radius), material(material) {
     
 }
 
@@ -22,6 +22,7 @@ bool Sphere::hit(const Ray& ray, float t_min, float t_max, HitRecord& rec) const
             rec.t = temp;
             rec.p = ray.point_at_parameter(temp);
             rec.normal = (rec.p - center) / radius;
+            rec.material = material;
             return true;
         }
         temp = (-b + sqrt_discriminant) / a;
@@ -29,6 +30,7 @@ bool Sphere::hit(const Ray& ray, float t_min, float t_max, HitRecord& rec) const
             rec.t = temp;
             rec.p = ray.point_at_parameter(temp);
             rec.normal = (rec.p - center) / radius;
+            rec.material = material;
             return true;
         }
     }
