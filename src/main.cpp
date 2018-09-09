@@ -9,25 +9,33 @@
 
 using namespace std;
 
-Vec3 compute_color(const Ray& ray, const HitableList& world) {
-    HitRecord rec;
-    
-    if (world.hit(ray, 0.0, MAXFLOAT, rec)) {
-        return 0.5 * (rec.normal + Vec3(1.0, 1.0, 1.0));
-    }
-
-    Vec3 unit_direction = ray.direction().normalized();
-    float t = 0.5 * (unit_direction.y + 1.0);
-    return (1.0 - t) * Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0);
-}
-
-
 double random_number() {
     static default_random_engine generator;
     static uniform_real_distribution<double> distribution(0.0, 1.0);
     return distribution(generator);
 }
 
+Vec3 random_in_unit_sphere() {
+    Vec3 p;
+    do {
+        p = 2.0 * Vec3(random_number(), random_number(), random_number()) - Vec3(1.0, 1.0, 1.0);
+    } while(p.sqr_norm() >= 1.0);
+    
+    return p;
+}
+
+Vec3 compute_color(const Ray& ray, const HitableList& world) {
+    HitRecord rec;
+    
+    if (world.hit(ray, 0.001, MAXFLOAT, rec)) {
+        Vec3 target = rec.p + rec.normal + random_in_unit_sphere();
+        return 0.5 * compute_color(Ray(rec.p, target-rec.p), world);
+    }
+
+    Vec3 unit_direction = ray.direction().normalized();
+    float t = 0.5 * (unit_direction.y + 1.0);
+    return (1.0 - t) * Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0);
+}
 
 int main() {
     int nx = 400;
@@ -58,6 +66,9 @@ int main() {
             }
             
             color /= float(ns);
+            
+            // gamma 2 correction
+            color = Vec3(sqrt(color.x), sqrt(color.y), sqrt(color.z));
 
             cout << CHANNEL_TO_INT(color.x) << " " << CHANNEL_TO_INT(color.y) << " " << CHANNEL_TO_INT(color.z) << endl;
         }
