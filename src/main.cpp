@@ -40,8 +40,8 @@ int main() {
 
     shared_ptr<Sphere> s1 = make_shared<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5, make_shared<Lambertian>(Vec3(0.8, 0.3, 0.3)));
     shared_ptr<Sphere> s2 = make_shared<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0, make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0)));
-    shared_ptr<Sphere> s3 = make_shared<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.6, 0.2)));
-    shared_ptr<Sphere> s4 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.8, 0.8)));
+    shared_ptr<Sphere> s3 = make_shared<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.1));
+    shared_ptr<Sphere> s4 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.8, 0.8), 0.7));
 
     HitableList world;
     world.add(s1);
