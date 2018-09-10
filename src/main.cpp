@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <limits>
 #include "random.h"
 #include "camera.h"
 #include "sphere.h"
@@ -15,7 +16,7 @@ using namespace std;
 Vec3 compute_color(const Ray& ray, const HitableList& world, int recursion_depth) {
     HitRecord rec;
     
-    if (world.hit(ray, 0.001, MAXFLOAT, rec)) {
+    if (world.hit(ray, 0.001, numeric_limits<float>::max(), rec)) {
         Ray scattered;
         Vec3 attenuation;
         if (recursion_depth < 50 && rec.material->scatter(ray, rec, attenuation, scattered)) {
