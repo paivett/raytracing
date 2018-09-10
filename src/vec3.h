@@ -53,6 +53,8 @@ struct Vec3 {
     // by a given normal (should be a normal)
     Vec3 reflected(const Vec3& normal) const;
 
+    Vec3 cross(const Vec3& v) const;
+
     // Actual components of the Vec3
     float x, y, z;
 };

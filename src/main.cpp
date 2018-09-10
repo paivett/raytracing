@@ -52,7 +52,7 @@ int main() {
     world.add(s4);
     world.add(s5);
 
-    Camera cam;
+    Camera cam(Vec3(-2.0, 2.0, 1.0), Vec3(0.0, 0.0, -1.0), Vec3(0.0, 1.0, 0.0), 90.0, float(nx) / float(ny));
 
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {

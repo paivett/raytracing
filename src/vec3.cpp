@@ -92,6 +92,14 @@ Vec3 Vec3::reflected(const Vec3& normal) const {
     return (*this)- 2.0 * ((*this) * normal) * normal;
 }
 
+Vec3 Vec3::cross(const Vec3& v) const {
+    return Vec3(
+        y * v.z - z * v.y,
+        -(x * v.z - z * v.x),
+        x * v.y - y * v.x
+    );
+}
+
 // Output to an ostream
 std::ostream& operator<<(std::ostream& o, Vec3 v) {
     o << v.x << ", " << v.y << ", " << v.z;
