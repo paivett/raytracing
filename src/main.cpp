@@ -6,6 +6,7 @@
 #include "hitable_list.h"
 #include "metal.h"
 #include "lambertian.h"
+#include "dielectric.h"
 
 #define CHANNEL_TO_INT(c)   (int(255.99 * c))
 
@@ -38,16 +39,18 @@ int main() {
 
     cout << "P3" << endl << nx << " " << ny << endl << "255" << endl;
 
-    shared_ptr<Sphere> s1 = make_shared<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5, make_shared<Lambertian>(Vec3(0.8, 0.3, 0.3)));
+    shared_ptr<Sphere> s1 = make_shared<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5, make_shared<Lambertian>(Vec3(0.1, 0.2, 0.5)));
     shared_ptr<Sphere> s2 = make_shared<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0, make_shared<Lambertian>(Vec3(0.8, 0.8, 0.0)));
     shared_ptr<Sphere> s3 = make_shared<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.6, 0.2), 0.1));
-    shared_ptr<Sphere> s4 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5, make_shared<Metal>(Vec3(0.8, 0.8, 0.8), 0.7));
+    shared_ptr<Sphere> s4 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5, make_shared<Dielectric>(1.5));
+    shared_ptr<Sphere> s5 = make_shared<Sphere>(Vec3(-1.0, 0.0, -1.0), -0.45, make_shared<Dielectric>(1.5));
 
     HitableList world;
     world.add(s1);
     world.add(s2);
     world.add(s3);
     world.add(s4);
+    world.add(s5);
 
     Camera cam;
 
