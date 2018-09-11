@@ -53,7 +53,11 @@ int main() {
     world.add(s4);
     world.add(s5);
 
-    Camera cam(Vec3(-2.0, 2.0, 1.0), Vec3(0.0, 0.0, -1.0), Vec3(0.0, 1.0, 0.0), 90.0, float(nx) / float(ny));
+    Vec3 look_from(3.0, 3.0, 2.0);
+    Vec3 look_at(0.0, 0.0, -1.0);
+    float dist_to_focus = (look_from - look_at).norm();
+    float aperture = 2.0;
+    Camera cam(look_from, look_at, Vec3(0.0, 1.0, 0.0), 20.0, float(nx) / float(ny), aperture, dist_to_focus);
 
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
