@@ -50,10 +50,10 @@ bool Dielectric::scatter(const Ray& ray_in, const HitRecord& rec, Vec3& attenuat
 
     if (random_number() < reflect_probability) {
         reflected = ray_in.direction().normalized().reflected(rec.normal);
-        scattered = Ray(rec.p, reflected);
+        scattered = Ray(rec.p, reflected, ray_in.time());
     }
     else {
-        scattered = Ray(rec.p, refracted);
+        scattered = Ray(rec.p, refracted, ray_in.time());
     }
     
     return true;

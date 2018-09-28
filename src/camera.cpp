@@ -2,7 +2,7 @@
 #include "random.h"
 #include <cmath>
 
-Camera::Camera(const Vec3& look_from, const Vec3& look_at, const Vec3& vup, float vfov, float aspect, float aperture, float focus_dist) {
+Camera::Camera(const Vec3& look_from, const Vec3& look_at, const Vec3& vup, float vfov, float aspect, float aperture, float focus_dist, float aperture_interval) : aperture_interval(aperture_interval) {
     lens_radius = aperture / 2.0;
     float theta = vfov * M_PI / 180.0;
     float half_height = tan(theta / 2.0);
@@ -22,5 +22,6 @@ Camera::Camera(const Vec3& look_from, const Vec3& look_at, const Vec3& vup, floa
 Ray Camera::get_ray(float s, float t) {
     Vec3 rd = lens_radius * random_in_unit_disk();
     Vec3 offset = u * rd.x + v * rd.y;
-    return Ray(origin + offset, lower_left_corner + s*horizontal + t*vertical - origin - offset);
+    float ti = random_number() * aperture_interval;
+    return Ray(origin + offset, lower_left_corner + s*horizontal + t*vertical - origin - offset, ti);
 }
